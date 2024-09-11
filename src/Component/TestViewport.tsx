@@ -1,6 +1,6 @@
-import {TestText} from "./TestText.tsx";
 import {selectRandomText} from "../utils/SelectRandomText.ts";
 import {parseTextToTextChars, TextChar} from "../utils/ParseTextToTextChars.ts";
+import {TestText} from "./TestText.tsx";
 
 export function TestViewport() {
     const test1 = "public static void main";

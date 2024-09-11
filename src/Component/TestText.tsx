@@ -1,33 +1,40 @@
 import {TextChar} from "../utils/ParseTextToTextChars.ts";
-import {useEffect, useState} from "react";
-import {addSplitter} from "../utils/AddSplitter.ts";
-import {parseCharsToString} from "../utils/ParseCharsToString.ts";
 import {onKeyEventHandler} from "../utils/OnKeyEventHandler.ts";
+import {useState} from "react";
 
 export interface TextChars {
     chars: TextChar[]
 }
 
 export function TestText(textChars: TextChars) {
+    const [pressedKey, setPressedKey] = useState("");
 
-    const textToReturn: TextChar[] = addSplitter(textChars)
+    const onPressedKey = (e) => {
+        setPressedKey(e.key);
+    };
 
-    const [pressedKey, setPressedKey] = useState("")
+    const charTsx = []
 
-    useEffect(() => {
-        document.addEventListener("keydown", detectedKeyDown, true)
-    }, [])
-
-    const detectedKeyDown = (e: KeyboardEvent) => {
-        setPressedKey(e.key)
+    for (let charIndex = 0; charIndex < textChars.chars.length; charIndex++) {
+        const actualChar = textChars.chars[charIndex];
+        charTsx.push(
+            <div className={"Character"} key={"C" + charIndex}>
+                {actualChar.char}
+            </div>
+        )
     }
 
     onKeyEventHandler(textChars, pressedKey)
 
-    const parsedChars = parseCharsToString(textToReturn);
-
     return <div className={"TestText"}>
-        {parsedChars}
+        <div>
+            {charTsx}
+        </div>
+
+        <div className={"InputField"}>
+            <input onKeyDown={onPressedKey}/>
+        </div>
     </div>
 }
+
 
